@@ -1,0 +1,74 @@
+﻿@using MVC_CRUD_Users.Models.Classes;
+@{
+    Layout = null;
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+    IEnumerable<Role> roles = ViewBag.Roles;
+
+    Dictionary<string, string> lang = new Dictionary<string, string>
+    {
+        {"Id", "ID" },
+        {"RoleName", "Роль" }
+    };
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@title</title>
+    <link href="~/Content/Common/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/Common/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="conteiner">
+        <header class="header">
+            <div class="central-part central-part--column central-part--justify-center">
+                <div class="header-menu">
+                    <a class="header-menu__item" href="/Home/Index">Главная</a>
+                    <a class="header-menu__item" href="/User/Index">Пользователи</a>
+                    <a class="header-menu__item line-height--2" href="/User/CreateUser">Создать пользователя</a>
+                    <a class="header-menu__item" href="/Role/Index">Роли</a>
+                    <a class="header-menu__item" href="/Role/CreateRole">Создать роль</a>
+                </div>
+            </div>
+        </header>
+        <main class="main main--justify-start main--padding-top-2">
+            <div class="central-part central-part--justify-center">
+                <table class="userTable">
+                    <caption>@caption</caption>
+                    <thead>
+                        <tr>
+                            @foreach (var propInfo in typeof(Role).GetProperties())
+                        {
+                            <th @((propInfo.Name == "Id") ? "class=w-5" : "class=w-80")>@(lang.ContainsKey(propInfo.Name) ? lang[propInfo.Name] : propInfo.Name)</th>
+                    }
+                            <th class="w-auto">Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (roles?.Any() == true)
+                        {
+                            foreach (var role in roles)
+                            {
+                                <tr>
+                                    @foreach (var propInfo in typeof(Role).GetProperties())
+                                    {
+                                        <td>@propInfo.GetValue(role)</td>
+                                    }
+                                    <td class="td-inline w-auto">
+                                        <a class="btn-edit" href="/Role/EditRole/@role.Id">Изменить</a>
+                                        <a class="btn-delete" href="/Role/DeleteRole/@role.Id">Удалить</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <footer class="footer"></footer>
+    </div>
+</body>
+</html>

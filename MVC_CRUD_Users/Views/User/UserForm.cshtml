@@ -1,0 +1,148 @@
+﻿@using MVC_CRUD_Users.Models.Classes;
+@{
+    Layout = null;
+    string title = ViewBag.Title;
+    string caption = ViewBag.Caption;
+
+    IEnumerable<Role> roles = ViewBag.Roles;
+
+    string uLogin = ViewBag.uLogin;
+    string uPassword = ViewBag.uPassword;
+    string uFirstName = ViewBag.uFirstName;
+    string uLastName = ViewBag.uLastName;
+    string uEmail = ViewBag.uEmail;
+    string uPhone = ViewBag.uPhone;
+    string uRole = ViewBag.uRole;
+
+    string loginError = ViewData["Login"]?.ToString();
+    string passwordError = ViewData["Password"]?.ToString();
+    string firstNameError = ViewData["FirstName"]?.ToString();
+    string lastNameError = ViewData["LastName"]?.ToString();
+    string emailError = ViewData["Email"]?.ToString();
+    string phoneError = ViewData["Phone"]?.ToString();
+    string RoleError = ViewData["Role"]?.ToString();
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@title</title>
+    <link href="~/Content/Common/css/reset.css" rel="stylesheet" />
+    <link href="~/Content/Common/css/main.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <div class="central-part central-part--column central-part--justify-center">
+            <div class="header-menu">
+                <a class="header-menu__item" href="/Home/Index">Главная</a>
+                <a class="header-menu__item" href="/User/Index">Пользователи</a>
+                <a class="header-menu__item line-height--2" href="/User/CreateUser">Создать пользователя</a>
+                <a class="header-menu__item" href="/Role/Index">Роли</a>
+                <a class="header-menu__item" href="/Role/CreateRole">Создать роль</a>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <form id="CreateUserForm" style="align-self:center;" method="post">
+            <div class="fields">
+                <h2>@caption</h2>
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="Login" runat="server" Text="">Логин</label>
+                    </div>
+                    <div class="w-70">
+                        <input @((loginError != null) ? "class=error" : "") type="text" name="Login" placeholder="Логин" value="@((uLogin != null) ? uLogin : "")">
+                    </div>
+                </div>
+                @if (loginError != null)
+                {
+                    <div class="text-error">@loginError</div>
+                }
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="Password" runat="server" Text="">Пароль</label>
+                    </div>
+                    <div class="w-70">
+                        <input @((passwordError != null) ? "class=error" : "") type="password" name="Password" placeholder="Пароль" value="@((uPassword != null) ? uPassword : "")">
+                    </div>
+                </div>
+                @if (passwordError != null)
+                {
+                    <div class="text-error">@passwordError</div>
+                }
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="FirstName" runat="server" Text="">Имя</label>
+                    </div>
+                    <div class="w-70">
+                        <input @((firstNameError != null) ? "class=error" : "") type="text" name="FirstName" placeholder="Имя" value="@((uFirstName != null) ? uFirstName : "")">
+                    </div>
+                </div>
+                @if (firstNameError != null)
+                {
+                    <div class="text-error">@firstNameError</div>
+                }
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="LastName" runat="server" Text="">Фамилия</label>
+                    </div>
+                    <div class="w-70">
+                        <input @((lastNameError != null) ? "class=error" : "") type="text" name="LastName" placeholder="Фамилия" value="@((uLastName != null) ? uLastName : "")">
+                    </div>
+                </div>
+                @if (lastNameError != null)
+                {
+                    <div class="text-error">@lastNameError</div>
+                }
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="Email" runat="server" Text="">E-mail</label>
+                    </div>
+                    <div class="w-70">
+                        <input @((emailError != null) ? "class=error" : "") type="text" name="Email" placeholder="E-mail" value="@((uEmail != null) ? uEmail : "")">
+                    </div>
+                </div>
+                @if (emailError != null)
+                {
+                    <div class="text-error">@emailError</div>
+                }
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="Phone" runat="server" Text="">Телефон</label>
+                    </div>
+                    <div class="w-70">
+                        <input @((phoneError != null) ? "class=error" : "") type="text" name="Phone" placeholder="Телефон" value="@((uPhone != null) ? uPhone : "")">
+                    </div>
+                </div>
+                @if (phoneError != null)
+                {
+                    <div class="text-error">@phoneError</div>
+                }
+                <div class="fields__item">
+                    <div class="w-30 text-right">
+                        <label class="padding-right-10" for="Role" runat="server" Text="">Роль</label>
+                    </div>
+                    <div class="w-70">
+                        <select @((RoleError != null) ? "class=error" : "") type="text" name="Role">
+                            <option value=""></option>
+                            @foreach(Role item in roles)
+                            {
+                            <option value="@item.RoleName" @((uRole != null && uRole == item.RoleName) ? "selected" : "")>@item.RoleName</option>
+                            }
+                            
+                        </select>
+                    </div>
+                </div>
+                @if (RoleError != null)
+                {
+                    <div class="text-error">@RoleError</div>
+                }
+                <button type="submit">Создать</button>
+            </div>
+        </form>
+    </main>
+    <footer class="footer"></footer>
+</body>
+</html>
